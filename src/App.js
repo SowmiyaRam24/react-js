@@ -1,32 +1,32 @@
-
+import React,{useState} from 'react';
 import './App.css';
-import Expence from'./components/ExpenceItems';
-
+import Froms from './components/Froms/Froms';
+import Expence from'./components/Expense/ExpenceItems';
+const DUMMY_DATE=[
+  {id:'e4',title:'car Insurance',amount:29,date:new Date()},
+  {id:'e3',title:'bus',amount:700,date:new Date()},
+  {id:'e6',title:'egg',amount:0,date:new Date()}
+];
 function App() {
-  const expenses=[
-    {title:'car Insurance',amount:299,date:new Date()},
-    {title:'bus',amount:700,date:new Date()},
-    {title:'egg',amount:898,date:new Date()}
-  ];
+  const [expenses,setExpenses]=useState(DUMMY_DATE)
+  const addExpenseHandler=expense=>{
+    setExpenses((PreExpense)=>{
+      return[expense,...PreExpense];
+    });
+    
+  };
+  
   return (
     <div className="App">
-      <Expence 
-      title={expenses[0].title}
-      amount={expenses[0].amount}
-      date={expenses[0].date}>
-
-      </Expence>
-      <Expence
-       title={expenses[1].title}
-       amount={expenses[1].amount}
-       date={expenses[1].date}>
-      </Expence>
-      <Expence  title={expenses[2].title}
-      amount={expenses[2].amount}
-      date={expenses[2].date}
-      ></Expence>
+      <Froms onAddExpense={addExpenseHandler}/>
+      {expenses.map((expense)=><Expence 
+      key={expense.id}
+      title={expense.title}
+      amount={expense.amount}
+      date={expense.date}/>
+      )}
+         
     </div>
   );
 }
-
 export default App;
